@@ -921,8 +921,8 @@ integer, allocatable                :: ipivs(:), idxs(:)
 
 eps0   = epsilon(0.0d0)
 
-epsdisc  = 1.0d-13
-epsqr    = 1.0d-13
+epsdisc  = 1.0d-14
+epsqr    = 1.0d-14
 epsnewt  = 1.0d-7
 
 if (eps0 .lt. 1.0d-17) then
@@ -938,9 +938,9 @@ epsnewt  = 1.0d-15
 endif
 
 nlege  = 30
-nints0 = 2
+nints0 = 4
 allocate(ab0(2,nints0))
-ab0(1,1)   = -500.0d0
+ab0(1,1)   = -200.0d0
 ab0(2,1)   = -1.0d0
 
 ab0(1,2)   = -1.0d0
@@ -950,7 +950,7 @@ ab0(1,3)   =  0.0d0
 ab0(2,3)   =  1.0d0
 
 ab0(1,4)   =  1.0d0
-ab0(2,4)   =900.0d0
+ab0(2,4)   = 200.0d0
 
 
 !  Discretize the user-supplied collection of functions
@@ -1068,7 +1068,7 @@ eps0     = epsilon(0.0d0)
 
 epsdisc  = 1.0d-14
 epsqr    = 1.0d-14
-epsnewt  = 1.0d-10
+epsnewt  = 1.0d-7
 
 if (eps0 .lt. 1.0d-17) then
 epsdisc  = 1.0d-15
@@ -1083,20 +1083,19 @@ epsnewt  = 1.0d-20
 endif
 
 nlege = 30
-
 nints0 = 4
 allocate(ab0(2,nints0))
-ab0(1,1) = -100.0d0
+ab0(1,1) = -500.0d0
 ab0(2,1) = -1.0d0
 
 ab0(1,2) = -1.0d0
 ab0(2,2) = 0.0d0
 
-ab0(1,3) = 0
+ab0(1,3) = 0.0d0
 ab0(2,3) = 1.0d0
 
-ab0(1,4) = 1
-ab0(2,4) = 100.0d0
+ab0(1,4) = 1.0d0
+ab0(2,4) = 500.0d0
 
 !
 !  Discretize the two user-supplied collections of functions
@@ -1164,7 +1163,6 @@ call prin2("in ggquad_singprod, rnorms2 = ",rnorms2)
 !
 !  Construct the products and orthonormalize 'em
 !
-
 
 
 nprods = krank1*krank2

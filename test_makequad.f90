@@ -367,7 +367,7 @@ end subroutine
 subroutine test_quad5()
 implicit double precision (a-h,o-z)
 !
-!  Test teh ggquad_sing code.
+!  Test the ggquad_sing code.
 ! 
 
 type(fundata), pointer         :: data
@@ -384,16 +384,9 @@ b       = 1.0d0
 !  Discretize the interval [alpha1, alpha2] ... oversample it thoroughly
 !
 
-iw = 20
-open(iw)
-
-
-alpha1=0
-
-do ii=1,9
-nalphas =  100
-alpha1  = alpha1-0.1d0
-alpha2  = 0.0d0
+nalphas = 1000
+alpha1  = -0.5d0
+alpha2  =  0.5d0
 
 allocate(data)
 allocate(data%alphas(nalphas))
@@ -414,94 +407,15 @@ call elapsed(t2)
 ! call prin2("after ggquad_sing, xs = ",xs)
 ! call prin2("after ggquad_sing, whts = ",whts)
 
-write (iw,"(A,I1,A)") "XX",ii,"={"
-
-do i=1,nquad
-if (i .eq. nquad) then
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"}};"
-else
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"},"
-endif
-end do
-
-deallocate(data)
-end do
-
-
-nalphas =  100
-alpha1  =  -0.95d0
-alpha2  =  0.00d0
-
-allocate(data)
-allocate(data%alphas(nalphas))
-data%nalphas = nalphas
-data%a       = a
-data%b       = b
-
-call legendre_quad(nalphas,data%alphas,whts)
-data%alphas = data%alphas*(alpha2-alpha1)/2 + (alpha1+alpha2)/2
-userptr = c_loc(data)
-
-call elapsed(t1)
-call ggquad_sing(nalphas,funalphas,userptr,nquad,xs,whts)
-call elapsed(t2)
-
-
-write (iw,"(A)") "XX10={"
-
-do i=1,nquad
-if (i .eq. nquad) then
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"}};"
-else
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"},"
-endif
-end do
-
 deallocate(data)
 
-
-nalphas =  100
-alpha1  =  -0.90d0
-alpha2  =  -0.00d0
-
-allocate(data)
-allocate(data%alphas(nalphas))
-data%nalphas = nalphas
-data%a       = a
-data%b       = b
-
-call legendre_quad(nalphas,data%alphas,whts)
-data%alphas = data%alphas*(alpha2-alpha1)/2 + (alpha1+alpha2)/2
-userptr = c_loc(data)
-
-call elapsed(t1)
-call ggquad_sing(nalphas,funalphas,userptr,nquad,xs,whts)
-call elapsed(t2)
-
-
-write (iw,"(A)") "XX11={"
-
-do i=1,nquad
-if (i .eq. nquad) then
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"}};"
-else
-write (iw,"(A,F36.30,A,F36.30,A)") "{ ",log(abs(xs(i)))," , ", alpha1,"},"
-endif
-end do
-
-deallocate(data)
-
-close(iw)
-
-
-stop
 
 
 !
 !  Check the accuracy of the formula for nn random values of alpha
 !
 
-nn = 1000
+nn = 10000
 allocate(alphas(nn))
 do i=1,nn
 !call random_number(dd)
@@ -513,13 +427,7 @@ dmax = 0
 do j=1,nalphas
 alpha = alphas(j)
 
-sum1 = 0
-do i=1,nquad
-x = xs(i)
-wht = whts(i)
-sum1 = sum1 + abs(x)**alpha * wht
-end do
-
+sum1 = sum(abs(xs)**alpha*whts)
 sum2 = 2.0d0/(1.0d0+alpha)
 derr = abs(sum1-sum2)
 dmax = max(derr,dmax)
@@ -536,10 +444,10 @@ implicit double precision (a-h,o-z)
 !  Test the ggquad_prod routine by building a quadrature for integrals of the form
 !
 !         b
-!     \int      |x|^\alpha dx
+!     \int      |x|^\alpha P_j(x) dx
 !         a
 !
-!  with alpha close to -1
+!  for a range of alphas and j=0,...,N
 !
 
 type(fundata), pointer         :: data
@@ -555,11 +463,12 @@ b       = 1.0d0
 !
 !  Discretize the interval [alpha1, alpha2] ... oversample it thoroughly
 !
-nalphas =  100
 norder  =  19
 npolys  =  norder+1
-alpha1  = -0.50d0 
-alpha2  =  0.50d0
+
+nalphas = 2000
+alpha1  =-0.9d0
+alpha2  = 0.0d0
 
 allocate(data)
 allocate(data%alphas(nalphas))
@@ -574,11 +483,15 @@ userptr = c_loc(data)
 call elapsed(t1)
 call ggquad_singprod(nalphas,npolys,funalphas,funpolys,userptr,userptr,nquad,xs,whts)
 call elapsed(t2)
-
 call prin2("ggquad_singprod time = ",t2-t1)
-! call prini("after ggquad_singprod, nquad = ",nquad)
-! call prin2("after ggquad_singprod, xs = ",xs)
-! call prin2("after ggquad_singprod, whts = ",whts)
+
+
+deallocate(data)
+
+
+call prini("after ggquad_singprod, nquad = ",nquad)
+call prin2("after ggquad_singprod, xs = ",xs)
+call prin2("after ggquad_singprod, whts = ",whts)
 
 !
 !  Check the accuracy of the formula for nn random values of alpha
@@ -779,12 +692,6 @@ xx = 2*x-1
 call leges(nfuns,xx,vals(i,:))
 vals(i,:) = vals(i,:) * abs(x)**alpha
 
-! call leges(nfuns,x,vals(i,:))
-! vals(i,:) = vals(i,:) * abs(x)**alpha
-
-! call leges(nfuns,x,vals(i,:))
-! vals(i,:) = vals(i,:) * log(abs(x))
-
 end do
 
 end subroutine
@@ -801,18 +708,18 @@ implicit double precision (a-h,o-z)
 !call test_quad1()
 !call prina("")
 
-!call test_quad2()
-!call prina("")
+call test_quad2()
+call prina("")
 
 !call test_quad3()
 !call prina("")
 
-call test_quad4()
-call prina("")
+!call test_quad4()
+!call prina("")
 
 !call test_quad5()
 !call prina("")
 
-! call test_quad6()
+!call test_quad6()
 
 end program

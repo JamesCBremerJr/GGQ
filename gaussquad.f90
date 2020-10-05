@@ -300,7 +300,7 @@ double precision, allocatable :: xs0(:), whts0(:)
 ier      = 0 
 
 eps0     = epsilon(0.0d0)
-maxiters = 20
+maxiters = 40
 nextra   = 2
 
 nints    = disc%nints
@@ -399,9 +399,9 @@ double precision, allocatable :: xs0(:), whts0(:)
 ier      = 0 
 eps0     = epsilon(0.0d0)
 
-maxsteps = 20
-minsteps = 1
-dscale   = 4
+maxsteps = 99
+minsteps = 2
+dscale   = 2.0d0
 
 nints    = disc%nints
 a        = disc%ab(1,1)
