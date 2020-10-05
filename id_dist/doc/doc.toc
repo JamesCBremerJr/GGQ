@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}Introduction}{4}
+\contentsline {section}{\numberline {2}Compilation instructions}{4}
+\contentsline {subsection}{\numberline {2.1}Beware that default command-line flags may not be sufficient for compiling the source codes!}{5}
+\contentsline {subsection}{\numberline {2.2}Install LAPACK}{5}
+\contentsline {subsection}{\numberline {2.3}Decompress and untar the file {\tt id\_dist.tar.gz}}{5}
+\contentsline {subsection}{\numberline {2.4}Edit the Makefile}{5}
+\contentsline {subsection}{\numberline {2.5}Make and test the libraries}{6}
+\contentsline {section}{\numberline {3}Naming conventions}{6}
+\contentsline {section}{\numberline {4}Example programs}{6}
+\contentsline {section}{\numberline {5}Directory structure}{6}
+\contentsline {subsection}{\numberline {5.1}Subdirectory {\tt bin}}{7}
+\contentsline {subsection}{\numberline {5.2}Subdirectory {\tt development}}{7}
+\contentsline {subsection}{\numberline {5.3}Subdirectory {\tt doc}}{7}
+\contentsline {subsection}{\numberline {5.4}Subdirectory {\tt src}}{7}
+\contentsline {subsection}{\numberline {5.5}Subdirectory {\tt test}}{7}
+\contentsline {section}{\numberline {6}Catalog of the routines}{8}
+\contentsline {subsection}{\numberline {6.1}List of the routines}{8}
+\contentsline {section}{\numberline {7}Documentation in the source codes}{16}
+\contentsline {section}{\numberline {8}Notation and decompositions}{16}
+\contentsline {subsection}{\numberline {8.1}Euclidean norm}{16}
+\contentsline {subsection}{\numberline {8.2}Spectral norm}{16}
+\contentsline {subsection}{\numberline {8.3}Singular value decomposition (SVD)}{17}
+\contentsline {subsection}{\numberline {8.4}Interpolative decomposition (ID)}{17}
+\contentsline {section}{\numberline {9}Bug reports, feedback, and support}{18}

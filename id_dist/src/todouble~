@@ -1,0 +1,20 @@
+#!/bin/sh
+
+#x=temp.f 
+for x in *.f ; do
+sed 's/complex\*16/double complex/i' $x > ${x}_temp8
+sed 's/complex \*16/double complex/i' ${x}_temp8 > ${x}_temp9
+sed 's/real\*10/double precision/i' ${x}_temp9 > ${x}_temp0
+sed 's/real \*10/double precision/i' ${x}_temp0 > ${x}_temp
+sed 's/real \*8/double precision/i' ${x}_temp > ${x}_temp2
+sed 's/dsqrt/sqrt/i' ${x}_temp2 > ${x}_temp3
+sed 's/dabs/abs/i' ${x}_temp3 > ${x}_temp4
+sed 's/datan/atan/i' ${x}_temp4 > ${x}_temp5
+sed 's/dsin/sin/i' ${x}_temp5 > ${x}_temp6
+sed 's/dcos/cos/i' ${x}_temp6 > ${x}_temp7
+
+cp ${x}_temp7 ${x}
+rm -f ${x}_temp*
+done
+
+./clean
