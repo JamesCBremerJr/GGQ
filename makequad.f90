@@ -940,17 +940,17 @@ endif
 nlege  = 30
 nints0 = 2
 allocate(ab0(2,nints0))
-! ab0(1,1)   = -500.0d0
-! ab0(2,1)   = -1.0d0
+ab0(1,1)   = -500.0d0
+ab0(2,1)   = -1.0d0
 
-! ab0(1,2)   = -1.0d0
-! ab0(2,2)   =  0.0d0
+ab0(1,2)   = -1.0d0
+ab0(2,2)   =  0.0d0
 
-ab0(1,1)   =  0.0d0
-ab0(2,1)   =  1.0d0
+ab0(1,3)   =  0.0d0
+ab0(2,3)   =  1.0d0
 
-ab0(1,2)   =  1.0d0
-ab0(2,2)   =900.0d0
+ab0(1,4)   =  1.0d0
+ab0(2,4)   =900.0d0
 
 
 !  Discretize the user-supplied collection of functions
