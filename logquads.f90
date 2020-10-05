@@ -354,8 +354,10 @@ double precision, allocatable          :: xsnear(:),whtsnear(:)
 !  Construct the quadrature rules
 !
 
+
+
 maxquad = 100
-norder  = 29
+norder  = 19
 nlege   = norder+1
 call legendre_quad(nlege,xslege,whtslege)
 
@@ -369,6 +371,8 @@ call logquad_sing(norder,x,nquadssing(i),xssing(:,i),whtssing(:,i))
 end do
 
 call logquad_near(norder,nquadnear,xsnear,whtsnear)
+
+
 !
 !  Write them out to disk
 !
