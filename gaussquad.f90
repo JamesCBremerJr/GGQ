@@ -95,6 +95,7 @@ double precision, allocatable :: coefsders(:,:)
 eps0 = epsilon(0.0d0)
 call elapsed(time1)
 
+
 if (ifsuppress .ne. 1) then
 write (*,*)
 endif
@@ -121,7 +122,6 @@ do i=1,nquad0
 vals(i,:) = vals(i,:) / sqrt(whts0(i))
 end do
 
-
 !
 !  Attempt to remove nquad/2 points
 !
@@ -131,6 +131,7 @@ call elapsed(time2)
 if (ifsuppress .ne. 1) then
 write (*,"(A,I3,A,I3,A)") "[--- gaussquad: nfuns = ",nfuns,", nquad = ",nquad," ---------------------------]"
 endif
+
 
 
 !
@@ -345,7 +346,7 @@ endif
 
 do i=1,nextra
 
-call gaussquad_newtstep(ier,disc,nfuns,coefs,rints,nquad,xs,whts,errl2,nsteps)
+call gaussquad_newtstep(jer,disc,nfuns,coefs,rints,nquad,xs,whts,errl2,nsteps)
 if (ifsuppress .ne. 1) then
 write (*, "(A,I2,A,I2,A,D10.2,A,F10.2)") "iter = ",iter+i,",  nsteps = ", nsteps, &
   ",  errl2 = ",errl2,",  time = ",t2-t1
@@ -382,7 +383,7 @@ double precision, allocatable, intent(inout)         :: xs(:), whts(:)
 !     ier = 4   means that an updated quadrature whose nodes lie inside the
 !               interval could not be found
 !     ier = 8   means the maximum number of steps in the step-length control
-!               procedure was exceeded before any improvement was ssen
+!               procedure was exceeded before any improvement was seen
 
 !    
 !     (nquad,xs,whts)  - assuming ier = 0, this will be the newly refined
